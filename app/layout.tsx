@@ -3,6 +3,8 @@ import "./globals.css";
 import { cn } from "@/utils/helpers";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
+import React from "react";
+import ReactQueryProvider from "@/components/provider/react-query-provider";
 const satoshi = localFont({
   src: "../public/assets/fonts/Satoshi-Regular.woff2",
   variable: "--satoshi",
@@ -21,9 +23,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(satoshi.variable, inter.variable, "bg-light-silver font-satoshi")}
+        className={cn(
+          satoshi.variable,
+          inter.variable,
+          "bg-light-silver font-satoshi"
+        )}
       >
-        {children}
+        <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
   );

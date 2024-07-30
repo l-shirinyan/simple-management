@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String
+  tasks Task[]
+  taskUser TaskUser[]
+}
+
+model Task {
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String?
+  type      String
+  priority  String
+  published Boolean @default(false)
+  tags      Tag[]   @relation("TaskTags")
+  users     TaskUser[]  
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tag {
+  id        Int     @id @default(autoincrement())
+  name      String
+  tasks     Task[]  @relation("TaskTags")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TaskUser {
+  taskId Int
+  userId Int
+  task   Task @relation(fields: [taskId], references: [id])
+  user   User @relation(fields: [userId], references: [id])
+
+  @@id([taskId, userId]) 
+}
