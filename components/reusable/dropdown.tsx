@@ -71,7 +71,7 @@ const DropDown: React.FC<IDropDown> = ({
     }
   };
   return (
-    <Listbox as="div">
+    <Listbox as="div" className="dropdown">
       <div>
         {label && (
           <Label className="block text-sm font-medium text-slate-gray font-inter">
@@ -90,7 +90,10 @@ const DropDown: React.FC<IDropDown> = ({
                           className={cn("block size-3 rounded-full", icon)}
                         ></span>
                       )}
-                      <span className="block truncate font-medium font-inter text-sm">
+                      <span
+                        className="block truncate font-medium font-inter text-sm"
+                        id={"dropdown_" + name}
+                      >
                         {value}
                         {selected.length - 1 !== idx && ","}
                       </span>
@@ -107,7 +110,10 @@ const DropDown: React.FC<IDropDown> = ({
                       )}
                     ></span>
                   )}
-                  <span className="text-slate-gray font-medium text-sm font-inter">
+                  <span
+                    className="text-slate-gray font-medium text-sm font-inter"
+                    id={"dropdown_" + name}
+                  >
                     {multi ? selectText : (selected as IOption).value}
                   </span>
                 </>

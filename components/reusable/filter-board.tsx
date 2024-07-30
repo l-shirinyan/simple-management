@@ -54,9 +54,13 @@ const FilterBoard = () => {
         <InputField
           placeholder="Search procedure"
           className="pl-[51px] min-w-[300px]"
+          name="search"
         />
       </div>
-      <div className="flex gap-[10px] flex-col lg:flex-row lg:h-[44px]">
+      <div
+        className="flex gap-[10px] flex-col lg:flex-row lg:h-[44px]"
+        id="filter_options"
+      >
         {filterItems.map(({ options, Icon, selectText }, idx) => (
           <DropDown
             key={idx}
@@ -67,15 +71,17 @@ const FilterBoard = () => {
             Icon={() => <Icon />}
           />
         ))}
-        <Datepicker
-          value={value}
-          placeholder="Select Date"
-          primaryColor="indigo"
-          containerClassName="[&_button]:top-0 relative"
-          inputClassName="whitespace-nowrap py-[9px] bg-ghost-white text-sm/6 font-medium text-slate-gray font-inter flex items-center gap-2 border border-lavender-gray rounded-lg pl-3 pr-[18px] focus-visible:outline-light-silver w-full"
-          onChange={handleValueChange}
-          maxDate={new Date()}
-        />
+        <div className="datepicker">
+          <Datepicker
+            value={value}
+            placeholder="Select Date"
+            primaryColor="indigo"
+            containerClassName="[&_button]:top-0 relative"
+            inputClassName="date_input whitespace-nowrap py-[9px] bg-ghost-white text-sm/6 font-medium text-slate-gray font-inter flex items-center gap-2 border border-lavender-gray rounded-lg pl-3 pr-[18px] focus-visible:outline-light-silver w-full"
+            onChange={handleValueChange}
+            maxDate={new Date()}
+          />
+        </div>
       </div>
     </div>
   );

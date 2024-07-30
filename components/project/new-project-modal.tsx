@@ -86,6 +86,7 @@ const CreateNewProject: React.FC<ICreate> = ({ handleClose }) => {
             Cancel
           </button>
           <button
+            id="create_ticket"
             type="submit"
             className="bg-royal-purple text-white rounded-xl py-2 w-full px-6"
           >

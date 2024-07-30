@@ -100,6 +100,7 @@ const WorkingBoard = () => {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 className="flex flex-col"
+                data-testid={`${type}-column`}
               >
                 <div className="max-h-[calc(100vh-350px)] overflow-y-auto overflow-x-hidden scrollbar-hide">
                   {state[type].map((ticket, index) => (
@@ -110,6 +111,7 @@ const WorkingBoard = () => {
                     >
                       {(provided) => (
                         <div
+                          data-testid={`board-card-${ticket.id}`}
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}

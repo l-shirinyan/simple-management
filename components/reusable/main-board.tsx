@@ -6,7 +6,10 @@ import WorkingBoard from "../project/working-board";
 const MainBoard = () => {
   return (
     <>
-      <div className="grid grid-cols-4 gap-[30px] min-w-[1200px] w-full">
+      <div
+        className="grid grid-cols-4 gap-[30px] min-w-[1200px] w-full"
+        id="boards"
+      >
         {COLUMNS.map(({ pointColor, title }, idx) => {
           return (
             <div

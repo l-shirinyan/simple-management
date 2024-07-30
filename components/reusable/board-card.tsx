@@ -15,7 +15,10 @@ const BoardCard: React.FC<{ ticket: ICardInfo }> = ({ ticket }) => {
             {tag}
           </div>
         </div>
-        <h5 className="text-base/6 font-black text-slate-gray tracking-[-0.2px] py-[10px]">
+        <h5
+          className="text-base/6 font-black text-slate-gray tracking-[-0.2px] py-[10px]"
+          id="ticket-item"
+        >
           {title}
         </h5>
         <div className="mb-[10px] flex gap-2 flex-wrap pb-[10px]">
