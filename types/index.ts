@@ -8,3 +8,9 @@ export interface ICardInfo {
   type: "todo" | "doing" | "done" | "waiting";
   id: string;
 }
+
+export interface IOption {
+  key: string | number;
+  value: string;
+  icon?: string;
+}
