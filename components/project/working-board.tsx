@@ -7,10 +7,10 @@ import {
   DraggableLocation,
   DropResult as DndDropResult,
 } from "@hello-pangea/dnd";
-import BoardCard from "./board-card";
 import { TICKETS } from "@/utils/mockdata";
 import { ICardInfo } from "@/types";
 import { COLUMNS } from "@/utils/constant";
+import BoardCard from "../reusable/board-card";
 
 interface State {
   [key: string]: ICardInfo[];

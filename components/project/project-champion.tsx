@@ -1,7 +1,7 @@
 import Breadcrumb from "../reusable/breadcrumb";
-import AddIcon from "@/assets/icons/icon-add.svg";
 import FilterBoard from "../reusable/filter-board";
 import MainBoard from "../reusable/main-board";
+import AddTicket from "./add-project";
 const breadcrumbs = [
   {
     link: "/",
@@ -26,10 +26,7 @@ const ProjectChampion = () => {
           </h5>
           <Breadcrumb breadcrumbs={breadcrumbs} />
         </div>
-        <button className="bg-royal-purple rounded-lg flex items-center gap-[9px] pl-[13px] pr-[18px] py-[10px] text-base/6 font-black min-w-[234px] text-white">
-          <AddIcon />
-          Create a new procedure
-        </button>
+        <AddTicket />
       </div>
       <FilterBoard />
       <div className="py-[30px] overflow-x-auto overflow-y-hidden">

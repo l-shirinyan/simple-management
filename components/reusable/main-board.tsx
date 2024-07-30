@@ -1,7 +1,7 @@
 import React from "react";
-import WorkingBoard from "./working-board";
 import { COLUMNS } from "@/utils/constant";
 import { cn } from "@/utils/helpers";
+import WorkingBoard from "../project/working-board";
 
 const MainBoard = () => {
   return (
