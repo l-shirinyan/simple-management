@@ -151,7 +151,7 @@ const WorkingBoard = () => {
         })}
       </div>
       {isLoading ? (
-        <div className="h-full grid grid-cols-4 gap-[30px] min-w-[1200px] w-full">
+        <div className="h-full grid grid-cols-4 gap-[30px] min-w-[1200px] w-full overflow-hidden">
           {new Array(4).fill(null).map((it, idx) => {
             return <SkeletonLoading key={idx} />;
           })}

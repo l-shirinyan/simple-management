@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Breadcrumb from "../reusable/breadcrumb";
 import AddTicket from "./add-project";
 import MainBoard from "./main-board";
@@ -27,7 +28,9 @@ const ProjectChampion = () => {
         </div>
         <AddTicket />
       </div>
-      <MainBoard />
+      <Suspense>
+        <MainBoard />
+      </Suspense>
     </div>
   );
 };
