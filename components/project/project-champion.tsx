@@ -1,7 +1,6 @@
 import Breadcrumb from "../reusable/breadcrumb";
-import FilterBoard from "../reusable/filter-board";
-import MainBoard from "../reusable/main-board";
 import AddTicket from "./add-project";
+import MainBoard from "./main-board";
 const breadcrumbs = [
   {
     link: "/",
@@ -28,10 +27,7 @@ const ProjectChampion = () => {
         </div>
         <AddTicket />
       </div>
-      <FilterBoard />
-      <div className="py-[30px] overflow-x-auto overflow-y-hidden">
-        <MainBoard />
-      </div>
+      <MainBoard />
     </div>
   );
 };

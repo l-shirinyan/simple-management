@@ -10,7 +10,6 @@ axiosInstance.defaults.headers.common["Content-Type"] = "application/json";
 axiosInstance.interceptors.request.use(
   (config) => {
     const userCookie = cookies().get("userCookie");
-      console.log("userCookie", userCookie);
     if (userCookie) {
       config.headers["Cookie"] = `user=${JSON.stringify(userCookie)}`;
     }

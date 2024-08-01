@@ -18,7 +18,7 @@ export const USERS = [
 export const PRIORITY_CLASSES = {
   low: "bg-pale-purple px-[10px] py-[2px] rounded-2xl w-max",
   medium: "bg-pale-purple px-[10px] py-[2px] rounded-2xl flex w-max",
-  highest: "bg-[#feefef] px-[10px] py-[2px] rounded-2xl flex w-max",
+  high: "bg-red px-[10px] py-[2px] rounded-2xl flex w-max",
 };
 
 export const PRIORITY = [
@@ -31,8 +31,8 @@ export const PRIORITY = [
     value: "Medium",
   },
   {
-    key: "highest",
-    value: "Highest",
+    key: "high",
+    value: "High",
   },
 ];
 
@@ -49,4 +49,9 @@ export const TAGS = [
     key: "informatique",
     value: "Informatique",
   },
+];
+export const COLOR_PALETTE = [
+  "[&_path]:fill-[#06b6d4]",
+  "[&_path]:fill-[#84cc16]",
+  "[&_path]:fill-[#ef4444]",
 ];

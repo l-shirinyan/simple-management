@@ -12,14 +12,12 @@ export async function POST(req: NextRequest) {
           name: "Test User",
         },
       });
-      console.log("createdUser", createdUser);
       if (!createdUser)
         return new NextResponse("Unauthenticated", { status: 401 });
     }
 
     return NextResponse.json({ message: "ok" });
   } catch (e) {
-    console.log("task post error", e);
     return new NextResponse("internal Error", { status: 500 });
   }
 }
@@ -28,7 +26,6 @@ export async function GET(req: NextRequest) {
   const cookieStore = req.cookies;
   const userCookie = cookieStore.get("user")?.value;
 
-  console.log("User Cookie:", userCookie);
   if (userCookie) {
     const userId = JSON.parse(userCookie).value;
 
@@ -45,7 +42,6 @@ export async function GET(req: NextRequest) {
     const users = await prisma?.user.findMany();
     return NextResponse.json({ users });
   } catch (e) {
-    console.log("bilboards_Post", e);
     return new NextResponse("internal Error", { status: 500 });
   }
 }

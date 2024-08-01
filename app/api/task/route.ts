@@ -31,7 +31,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(createdTask);
   } catch (e) {
-    console.log("task post error", e);
     return new NextResponse("internal Error", { status: 500 });
   }
 }
@@ -67,7 +66,6 @@ export async function GET(req: NextRequest) {
     });
     return NextResponse.json(tasks);
   } catch (e) {
-    console.log("task get error", e);
     return new NextResponse("internal Error", { status: 500 });
   }
 }
@@ -75,8 +73,6 @@ export async function GET(req: NextRequest) {
 export async function PATCH(req: NextRequest) {
   const body = await req.json();
   const { id } = body;
-  console.log("body", body);
-
   if (!id) {
     return new NextResponse("Task ID is required", { status: 400 });
   }
@@ -93,13 +89,11 @@ export async function PATCH(req: NextRequest) {
         tags: true,
       },
     });
-    console.log("updatedTask", updatedTask);
     return NextResponse.json({
       message: "Task updated successfully",
       task: updatedTask,
     });
   } catch (e) {
-    console.log("task patch error", e);
     return new NextResponse("internal Error", { status: 500 });
   }
 }

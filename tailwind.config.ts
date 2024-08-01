@@ -15,7 +15,7 @@ const config: Config = {
         inter: "var(--inter)",
       },
       colors: {
-        'light-silver': "#f3f4f6",
+        "light-silver": "#f3f4f6",
         "slate-gray": "#64748B",
         gainsboro: "#E8E8E8",
         "ghost-white": "#f9fafb",
@@ -26,6 +26,7 @@ const config: Config = {
         "pale-purple": "#f7f7ff",
         green: "#0CBE5E",
         yellow: "#FFDD0F",
+        red: "#feefef",
       },
       boxShadow: {
         dark: "0px 1px 2px 0px #5457761A",

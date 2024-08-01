@@ -3,13 +3,13 @@ import FireHighIcon from "@/assets/icons/icon-fire-high.svg";
 import { PRIORITY_CLASSES } from "@/utils/constant";
 
 interface IPriority {
-  priority: "low" | "medium" | "highest";
+  priority: "low" | "medium" | "high";
 }
 
 const ICONS = {
   low: FireIcon,
   medium: FireIcon,
-  highest: FireHighIcon,
+  high: FireHighIcon,
 };
 
 const PriorityTag: React.FC<IPriority> = ({ priority }) => {

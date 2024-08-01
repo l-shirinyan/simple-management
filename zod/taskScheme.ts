@@ -4,7 +4,7 @@ export const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),
   content: z.string().optional(),
   type: z.string().min(1, "Type is required"),
-  priority: z.enum(["Low", "Medium", "High"]),
+  priority: z.enum(["low", "medium", "high"]),
   published: z.boolean().optional(),
   tags: z
     .array(

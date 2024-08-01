@@ -2,24 +2,42 @@ import { COLUMNS, PRIORITY, TAGS, USERS } from "@/utils/constant";
 import DropDown from "../reusable/dropdown";
 import InputField from "../reusable/custom-input";
 import { useState } from "react";
-import { IOption } from "@/types";
+import { IOption, IUser } from "@/types";
+import { useFetch, useMutationQuery } from "@/queries";
+import { transformCreateTicketData } from "@/utils/helpers";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface ICreate {
   handleClose: () => void;
 }
 const CreateNewProject: React.FC<ICreate> = ({ handleClose }) => {
+  const queryClient = useQueryClient();
+  const { data: userData } = useFetch({
+    url: "/user",
+    queryKey: "user",
+    select: (data: { users: IUser[] }) => {
+      const user = data.users.map(({ name, id }) => {
+        return { key: id, value: name };
+      });
+      return user;
+    },
+  });
+  const mutate = useMutationQuery({
+    method: "post",
+    url: `/task`,
+  });
   const options = COLUMNS.map(({ type, title, pointColor }) => {
     return { key: type, value: title, icon: pointColor };
   });
-  const userOptions = USERS.map(({ name, id }) => {
-    return { key: id, value: name };
-  });
   const [values, setValues] = useState({
     type: "todo",
-    assignee: [],
-    summary: "",
+    users: [],
+    title: "",
     priority: "low",
     tags: [],
+    authorId: 1,
+    content: "",
+    published: true,
   });
 
   const handleSet = ({
@@ -27,17 +45,22 @@ const CreateNewProject: React.FC<ICreate> = ({ handleClose }) => {
     value,
   }: {
     name: string;
-    value: IOption | IOption[];
+    value: IOption | IOption[] | number | string;
   }) => {
     setValues((prev) => {
       return { ...prev, [name]: value };
     });
   };
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (values.summary.length) {
-      handleClose();
+    if (values.title.length) {
+      const res = await mutate.mutateAsync(
+        transformCreateTicketData(values as any)
+      );
+      if (res) {
+        handleClose();
+        await queryClient.refetchQueries();
+      }
     }
   };
   return (
@@ -49,19 +72,21 @@ const CreateNewProject: React.FC<ICreate> = ({ handleClose }) => {
           name="type"
           onChange={handleSet}
         />
-        <DropDown
-          options={userOptions}
-          label="Assignee"
-          multi={true}
-          name="assignee"
-          onChange={handleSet}
-        />
+        {!!userData && (
+          <DropDown
+            options={userData}
+            label="Users"
+            multi={true}
+            name="users"
+            onChange={handleSet}
+          />
+        )}
         <InputField
           label="Title (*This field is required)"
           name="title"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setValues((prev) => {
-              return { ...prev, summary: e.target.value };
+              return { ...prev, title: e.target.value };
             });
           }}
         />

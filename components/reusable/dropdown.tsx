@@ -22,7 +22,7 @@ interface IDropDown {
     value,
   }: {
     name: string;
-    value: IOption | IOption[];
+    value: IOption | IOption[] | number | string;
   }) => void;
 }
 
@@ -67,7 +67,7 @@ const DropDown: React.FC<IDropDown> = ({
       onChange && onChange({ name, value: getValue() });
     } else {
       setSelected(option);
-      onChange && onChange({ name, value: option });
+      onChange && onChange({ name, value: option.key });
     }
   };
   return (
