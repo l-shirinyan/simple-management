@@ -113,7 +113,8 @@ const CreateNewProject: React.FC<ICreate> = ({ handleClose }) => {
           <button
             id="create_ticket"
             type="submit"
-            className="bg-royal-purple text-white rounded-xl py-2 w-full px-6"
+            className="bg-royal-purple text-white rounded-xl py-2 w-full px-6 disabled:opacity-55"
+            disabled={!values.title.length}
           >
             Create
           </button>

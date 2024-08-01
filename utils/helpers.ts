@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { COLOR_PALETTE } from "./constant";
 import moment from "moment";
 import { ICardInfo, TimeOfDay } from "@/types";
+import { useSearchParams } from "next/navigation";
 
 export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
 export const transformCreateTicketData = (values: ICardInfo) => {
@@ -22,7 +23,7 @@ export function getRandomColor() {
 }
 
 export const convertToISODateUTC = (
-  dateString: Date | null,
+  dateString: Date | null | string,
   timeOfDay: TimeOfDay = TimeOfDay.StartOfDay
 ): string => {
   let date = moment.utc(dateString, moment.ISO_8601);

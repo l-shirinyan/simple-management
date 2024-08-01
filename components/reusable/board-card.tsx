@@ -17,8 +17,8 @@ const BoardCard: React.FC<{ ticket: ICardInfo; userData?: IUser[] }> = ({
     userData && userData.filter((user) => userIds?.includes(user.id));
   return (
     <div className="pb-5">
-      <div className="bg-white rounded-lg p-5">
-        <div className="flex items-center gap-[10px]">
+      <div className="bg-white rounded-lg p-5 h-[185px]">
+        <div className="flex items-start gap-[10px]">
           <PriorityTag priority={priorityTag} />
           <div className="flex gap-2 flex-wrap">
             {tags?.map(({ name, id }) => {
@@ -54,8 +54,8 @@ const BoardCard: React.FC<{ ticket: ICardInfo; userData?: IUser[] }> = ({
         </div>
         <div className="pt-[10px] border-t border-t-silver font-inter flex items-center justify-between">
           <div className="flex items-center gap-[6px] bg-[#f2f2f5] px-2 py-[2.6px] rounded-xl w-max">
-            <TimeIcon />
-            <div className="font-semibold text-[8px]/[10px] text-dark-blue">
+            <TimeIcon className="" />
+            <div className="font-semibold text-xs/[10px] text-dark-blue">
               Due date: {moment(createdAt).format("DD/MM/YY")}
             </div>
           </div>

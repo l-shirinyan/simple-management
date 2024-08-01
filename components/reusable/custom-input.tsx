@@ -8,12 +8,14 @@ interface IInputField {
   type?: string;
   className?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  defaultValue?: string;
 }
 
 const InputField: React.FC<IInputField> = ({
   name,
   label,
   className,
+  defaultValue,
   ...props
 }) => {
   return (
@@ -21,7 +23,7 @@ const InputField: React.FC<IInputField> = ({
       {label && (
         <label
           htmlFor={name}
-          className="block text-sm font-medium text-slate-gray font-inter"
+          className="block text-sm font-bold text-slate-gray font-inter mb-2"
         >
           {label}
         </label>
@@ -32,6 +34,7 @@ const InputField: React.FC<IInputField> = ({
           "border w-full border-gainsboro bg-ghost-white rounded-lg px-4 py-[9px] font-normal text-base placeholder:text-slate-gray text-dark-blue focus-visible:outline-light-silver",
           className
         )}
+        defaultValue={defaultValue}
         {...props}
       />
     </div>

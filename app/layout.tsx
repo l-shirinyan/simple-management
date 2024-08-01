@@ -4,6 +4,7 @@ import { cn } from "@/utils/helpers";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import React from "react";
+import "animate.css";
 import ReactQueryProvider from "@/components/provider/react-query-provider";
 const satoshi = localFont({
   src: "../public/assets/fonts/Satoshi-Regular.woff2",

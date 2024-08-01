@@ -9,7 +9,7 @@ import {
 import { cn } from "@/utils/helpers";
 import CheckIcon from "@/assets/icons/icon-check.svg";
 import { IOption } from "@/types";
-
+import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 interface IDropDown {
   options: { key: string | number; value: string; icon?: string }[];
   label?: string;
@@ -24,6 +24,7 @@ interface IDropDown {
     name: string;
     value: IOption | IOption[] | number | string;
   }) => void;
+  hideArrow?: boolean;
 }
 
 const isArray = (value: IOption[] | IOption): value is IOption[] =>
@@ -37,6 +38,7 @@ const DropDown: React.FC<IDropDown> = ({
   Icon,
   name,
   onChange,
+  hideArrow,
 }) => {
   const [selected, setSelected] = useState<IOption[] | IOption>(
     multi ? [] : options[0]
@@ -74,7 +76,7 @@ const DropDown: React.FC<IDropDown> = ({
     <Listbox as="div" className="dropdown">
       <div>
         {label && (
-          <Label className="block text-sm font-medium text-slate-gray font-inter">
+          <Label className="block text-sm font-medium text-slate-gray font-inter mb-2">
             {label}
           </Label>
         )}
@@ -119,7 +121,14 @@ const DropDown: React.FC<IDropDown> = ({
                 </>
               )}
             </span>
-            <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2"></span>
+            {!hideArrow && (
+              <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                <ChevronUpDownIcon
+                  aria-hidden="true"
+                  className="h-5 w-5 text-gray-400"
+                />
+              </span>
+            )}
             {Icon && (
               <div className="mr-[6px]">
                 <Icon />

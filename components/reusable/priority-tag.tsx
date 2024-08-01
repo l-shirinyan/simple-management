@@ -20,7 +20,7 @@ const PriorityTag: React.FC<IPriority> = ({ priority }) => {
 
   const renderIcons = () =>
     Array.from({ length: iconCount }).map((_, index) => (
-      <IconComponent key={index} className="size-3" />
+      <IconComponent key={index} className="size-4" />
     ));
 
   return <div className={boxClass}>{renderIcons()}</div>;

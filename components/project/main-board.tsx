@@ -1,58 +1,55 @@
 "use client";
-import React, { useState } from "react";
-import { COLUMNS } from "@/utils/constant";
-import { cn, debounceFunc } from "@/utils/helpers";
+import React from "react";
 import WorkingBoard from "../project/working-board";
 import FilterBoard from "../reusable/filter-board";
 import { DateValueType } from "react-tailwindcss-datepicker";
-import { DateRange } from "@/types";
+import { useSearchParams } from "next/navigation";
 
 const MainBoard = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [value, setValue] = useState<DateRange>({
-    startDate: null,
-    endDate: null,
-  });
+  const searchParams = useSearchParams();
+  function updateSorting(sortOrder: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (sortOrder === "") {
+      params.delete("search");
+    } else {
+      params.set("search", sortOrder);
+    }
 
+    window.history.pushState(null, "", `?${params.toString()}`);
+  }
+  function updateSortingDate(date: DateValueType) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (date?.startDate === null) {
+      params.delete("startDate");
+      params.delete("endDate");
+    } else {
+      params.set("startDate", date?.startDate + "");
+      params.set("endDate", date?.endDate + "");
+    }
+
+    window.history.pushState(null, "", `?${params.toString()}`);
+  }
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    updateSorting(event.target.value);
   };
   const handleValueChange = (newValue: DateValueType) => {
     if (newValue && typeof newValue !== "string") {
-      setValue(newValue as DateRange);
+      updateSortingDate(newValue);
     } else {
-      setValue({
+      const date = {
         startDate: new Date(),
         endDate: new Date(new Date().setMonth(11)),
-      });
+      };
+      updateSortingDate(date);
     }
   };
   return (
     <>
       <FilterBoard
-        value={value}
         handleValueChange={handleValueChange}
         handleSearchChange={handleSearchChange}
       />
-      <div className="py-[30px] overflow-x-auto overflow-y-hidden">
-        <div
-          className="grid grid-cols-4 gap-[30px] min-w-[1200px] w-full"
-          id="boards"
-        >
-          {COLUMNS.map(({ pointColor, title }, idx) => {
-            return (
-              <div
-                key={idx}
-                className="flex items-center gap-[10px] sticky top-0 bg-light-silver pb-5"
-              >
-                <div className={cn(pointColor, "size-4 rounded-full")}></div>
-                <h5 className="text-sm font-black text-dark-blue">{title}</h5>
-              </div>
-            );
-          })}
-        </div>
-        <WorkingBoard searchTerm={searchTerm} value={value} />
-      </div>
+      <WorkingBoard />
     </>
   );
 };

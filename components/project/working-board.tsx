@@ -12,8 +12,9 @@ import { COLUMNS } from "@/utils/constant";
 import BoardCard from "../reusable/board-card";
 import { useFetch, useMutationQuery } from "@/queries";
 import SkeletonLoading from "../reusable/skeleton-loading";
-import moment from "moment";
-import { convertToISODateUTC } from "@/utils/helpers";
+import { cn, convertToISODateUTC } from "@/utils/helpers";
+import { useSearchParams } from "next/navigation";
+import { useQueryParams } from "@/hooks/useQueryParams";
 
 interface State {
   [key: string]: ICardInfo[];
@@ -48,16 +49,12 @@ const move = (
     [droppableDestination.droppableId]: destClone,
   };
 };
-interface IWorkBoard {
-  searchTerm: string;
-  value: DateRange;
-}
-const WorkingBoard: React.FC<IWorkBoard> = ({ searchTerm, value }) => {
-  const { endDate, startDate } = value;
+
+const WorkingBoard = () => {
   const [state, setState] = useState<State>({});
+  const { startDate, endDate, searchTerm } = useQueryParams();
   const start = convertToISODateUTC(startDate);
   const end = convertToISODateUTC(endDate, TimeOfDay.EndOfDay);
-
   const { isLoading, data } = useFetch<ICardInfo[]>({
     url: "/task",
     params: {
@@ -131,59 +128,79 @@ const WorkingBoard: React.FC<IWorkBoard> = ({ searchTerm, value }) => {
       });
     }
   };
-  if (isLoading) {
-    return (
-      <div className="h-full grid grid-cols-4 gap-[30px] min-w-[1200px] w-full">
-        {new Array(4).fill(null).map((it, idx) => {
-          return <SkeletonLoading key={idx} />;
+
+  return (
+    <div className="py-[30px] overflow-x-auto overflow-y-hidden">
+      <div
+        className="grid grid-cols-4 gap-[30px] min-w-[1200px] w-full"
+        id="boards"
+      >
+        {COLUMNS.map(({ pointColor, title, type }, idx) => {
+          return (
+            <div
+              key={idx}
+              className="flex items-center gap-[10px] sticky top-0 bg-light-silver pb-5"
+            >
+              <div className={cn(pointColor, "size-4 rounded-full")}></div>
+              <h5 className="text-sm font-black text-dark-blue">
+                {title}{" "}
+                {!!state[type]?.length && <span>({state[type]?.length})</span>}
+              </h5>
+            </div>
+          );
         })}
       </div>
-    );
-  } else {
-    return (
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className="grid grid-cols-4 gap-[30px] min-w-[1200px] w-full">
-          {COLUMNS.map(({ type }) => (
-            <Droppable key={type} droppableId={type} direction="vertical">
-              {(provided) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className="flex flex-col"
-                  data-testid={`${type}-column`}
-                >
-                  <div className="max-h-[calc(100vh-350px)] overflow-y-auto overflow-x-hidden scrollbar-hide">
-                    {state[type]?.map((ticket, index) => (
-                      <Draggable
-                        key={ticket.id}
-                        draggableId={ticket.id + ""}
-                        index={index}
-                      >
-                        {(provided) => (
-                          <div
-                            data-testid={`board-card-${ticket.id}`}
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            <BoardCard
-                              ticket={ticket}
-                              userData={userData as any}
-                            />
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                </div>
-              )}
-            </Droppable>
-          ))}
+      {isLoading ? (
+        <div className="h-full grid grid-cols-4 gap-[30px] min-w-[1200px] w-full">
+          {new Array(4).fill(null).map((it, idx) => {
+            return <SkeletonLoading key={idx} />;
+          })}
         </div>
-      </DragDropContext>
-    );
-  }
+      ) : (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="grid grid-cols-4 gap-[30px] min-w-[1200px] w-full">
+            {COLUMNS.map(({ type }) => (
+              <Droppable key={type} droppableId={type} direction="vertical">
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className="flex flex-col"
+                    data-testid={`${type}-column`}
+                  >
+                    <div className="max-h-[calc(100vh-350px)] overflow-y-auto overflow-x-hidden scrollbar-hide">
+                      {state[type]?.map((ticket, index) => (
+                        <Draggable
+                          key={ticket.id}
+                          draggableId={ticket.id + ""}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <div
+                              data-testid={`board-card-${ticket.id}`}
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <BoardCard
+                                ticket={ticket}
+                                userData={userData as any}
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  </div>
+                )}
+              </Droppable>
+            ))}
+          </div>
+        </DragDropContext>
+      )}
+    </div>
+  );
 };
 
 export default WorkingBoard;

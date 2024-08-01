@@ -1,5 +1,6 @@
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import CloseIcon from "@/assets/icons/icon-xmark-solid.svg";
+import { cn } from "@/utils/helpers";
 interface IModal {
   children: ReactNode;
   handleClose: () => void;
@@ -24,15 +25,14 @@ const Modal: React.FC<IModal> = ({ children, handleClose, title }) => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [handleClose]);
-
   return (
     <div className="fixed z-10 w-full left-0 h-screen top-0 flex items-center justify-center bg-[#0000003d] px-4">
       <div
-        className="relative z-20 bg-white rounded-lg max-w-[480px] w-full p-4"
+        className="relative z-20 bg-white rounded-lg max-w-[480px] w-full p-4 animate__animated animate__bounceInUp"
         ref={modalRef}
       >
         <button onClick={handleClose} className="size-4 absolute top-5 right-5">
-          <CloseIcon />
+          <CloseIcon className="[&_path]:fill-gray-500" />
         </button>
         <div className="flex flex-col font-inter">
           <h5 className="text-dark-blue font-semibold">{title}</h5>
